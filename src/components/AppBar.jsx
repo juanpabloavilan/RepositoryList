@@ -1,52 +1,66 @@
 import React from "react";
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TouchableWithoutFeedback } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  TouchableWithoutFeedback,
+  Platform,
+} from "react-native";
 import { Link, useLocation } from "react-router-native";
 import Header from "./Header";
 import useThemedStyles from "./hooks/useThemedStyles";
 
-const AppBarTab = ({children, to})=>{
-    const styles = useThemedStyles(stylesCallback)
-    const {pathname} = useLocation()
-    const tabStyles = [
-        styles.barTab,
-        pathname === to && styles.active
-    ]
-    return(
+const AppBarTab = ({ children, to }) => {
+  const styles = useThemedStyles(stylesCallback);
+  const { pathname } = useLocation();
+  const tabStyles = [styles.barTab, pathname === to && styles.active];
+  return (
     <Link to={to} component={TouchableWithoutFeedback}>
-        <Text style={tabStyles}>{children} {console.log(pathname)}</Text>
-    </Link>)
-}
+      <Text style={tabStyles}>
+        {children} {console.log(pathname)}
+      </Text>
+    </Link>
+  );
+};
 
 const AppBar = () => {
-  const styles = useThemedStyles(stylesCallback)
+  const styles = useThemedStyles(stylesCallback);
 
   return (
     <View>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false} style={ styles.container} >
-        <AppBarTab to={'/'}>Repositories</AppBarTab>
-        <AppBarTab to={'/signin'}>Sign In</AppBarTab>
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        style={styles.container}
+      >
+        <AppBarTab to={"/"}>Repositories</AppBarTab>
+        <AppBarTab to={"/signin"}>Sign In</AppBarTab>
+        <AppBarTab to={"/signin"}>{Platform.OS}</AppBarTab>
       </ScrollView>
     </View>
-      
-
   );
 };
 
 const stylesCallback = (theme) =>
   StyleSheet.create({
     container: {
-      backgroundColor: theme.colors.backgroundSecondary,
+      backgroundColor: Platform.select({
+        android: theme.colors.backgroundSecondary,
+        ios: theme.colors.error,
+        default: theme.colors.success
+      }),
       paddingVertical: 20,
-      paddingHorizontal:10,
+      paddingHorizontal: 10,
     },
-    barTab:{
-        marginLeft: 10,
-        fontWeight: 'bold',
-        color: '#cccc',
+    barTab: {
+      marginLeft: 10,
+      fontWeight: "bold",
+      color: "#cccc",
     },
-    active:{
-        color: theme.colors.headline
-    }
-})
+    active: {
+      color: theme.colors.headline,
+    },
+  });
 
 export default AppBar;
