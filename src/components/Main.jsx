@@ -1,19 +1,21 @@
 import { View, Text, StyleSheet } from "react-native";
 import Constants from "expo-constants";
 import RepositoryList from "./RepositoryList";
-import Header from "./Header";
 import useThemedStyles from "./hooks/useThemedStyles";
-import useTheme from "./hooks/useTheme";
+import AppBar from "./AppBar";
+import SignIn from "./SignIn";
+
+import {Route, Routes} from 'react-router-native'
 
 const Main = () => {
   let style = useThemedStyles(styles);
-  //console.log(styles)
   return (
     <View style={style.container}>
-      <Header>
-        <Text>Repositories</Text>
-      </Header>
-      <RepositoryList />
+      <AppBar />
+      <Routes>
+        <Route path='/' element={<RepositoryList/>}/>
+        <Route path='/signin' element={<SignIn/>} />
+      </Routes>
     </View>
   );
 };
@@ -22,8 +24,8 @@ const styles = (theme) =>
   StyleSheet.create({
     container: {
       marginTop: Constants.statusBarHeight,
-      flex:1,      
-      backgroundColor: "#eff0f3"
+      flex: 1,
+      backgroundColor: "#eff0f3",
     },
   });
 
