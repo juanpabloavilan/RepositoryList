@@ -33,7 +33,7 @@ const light_palette = {
 }
 
 const dark_palette = {
-    common,
+    ...common,
     background: BLACK,
     headline: WHITE,
     paragraph: GRAY,

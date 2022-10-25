@@ -25,7 +25,7 @@ const styles = (theme) =>
     container: {
       marginTop: Constants.statusBarHeight,
       flex: 1,
-      backgroundColor: "#eff0f3",
+      backgroundColor: theme.colors.main,
     },
   });
 

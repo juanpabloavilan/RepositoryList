@@ -28,15 +28,13 @@ const AppBar = () => {
   const styles = useThemedStyles(stylesCallback);
 
   return (
-    <View>
+    <View style={styles.container}>
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
-        style={styles.container}
       >
         <AppBarTab to={"/"}>Repositories</AppBarTab>
         <AppBarTab to={"/signin"}>Sign In</AppBarTab>
-        <AppBarTab to={"/signin"}>{Platform.OS}</AppBarTab>
       </ScrollView>
     </View>
   );

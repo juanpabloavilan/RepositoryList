@@ -8,7 +8,7 @@ const ThemeProvider = ({children}) =>{
      //Indicando el theme si es dark o light
     //const [isLightTheme, setIsLightTheme] = useState(true)
 
-    const isLightTheme = true
+    const isLightTheme = false
     const theme = {
         colors: isLightTheme ? colors.light_palette : colors.dark_palette,
         typography
