@@ -3,15 +3,18 @@ import { Text, StyleSheet } from "react-native"
 import { useEffect, useRef } from "react"
 import useThemedStyles from "./hooks/useThemedStyles" 
 
-const StyledText = ({style:propStyle, children, ...props}) =>{
+const StyledText = ({style:propStyle ={}, children, ...props}) =>{
     const styles = useThemedStyles(stylesCallback)
 
     const loadStyles = ()=>{
-        return Object.keys(props).map(prop =>{
+        const allStyles = Object.keys(props).map(prop =>{
             if(styles[prop]){
                 return styles[prop]
             }
         })
+        allStyles.push(propStyle)
+        return allStyles
+
     }
 
     return(
@@ -40,6 +43,12 @@ const stylesCallback = theme => StyleSheet.create({
     },
     buttonText:{
         color: theme.colors.buttonText
+    },
+    error:{
+        color: theme.colors.error
+    },
+    success:{
+        color: theme.colors.success
     }
 })
 

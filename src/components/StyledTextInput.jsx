@@ -1,17 +1,20 @@
+import { ErrorMessage } from 'formik'
 import React from 'react'
 import { TextInput, StyleSheet } from 'react-native'
 import useThemedStyles from './hooks/useThemedStyles'
+import StyledText from './StyledText'
 
-const StyledTextInput = ({style:propStyles = {}, ...props})=>{
+const StyledTextInput = ({style:propStyles = {}, showError, errorInfo, ...props})=>{
     const styles= useThemedStyles(stylesCallback)
-    const inputStyle ={
-        ...styles.txtInput,
-        ...propStyles
-    }
+    const inputStyle =[
+        styles.txtInput,
+        showError && styles.error,
+        propStyles
+    ]
     return(
         <>
-            <TextInput style={inputStyle} {...props}/>
-            {console.log(inputStyle)}   
+            <TextInput style={inputStyle} {...props}/> 
+            {showError && <StyledText error style={styles.errorMessage}>{errorInfo}</StyledText>}  
         </>
     )
 }
@@ -26,6 +29,12 @@ const stylesCallback = theme => StyleSheet.create({
         borderStyle: 'solid',
         borderWidth: 2,
         borderColor: theme.colors.button
+    },
+    error:{
+        borderColor: theme.colors.error
+    },
+    errorMessage:{
+        marginTop: -5
     }
 })
 
