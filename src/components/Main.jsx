@@ -1,11 +1,12 @@
 import { View, Text, StyleSheet } from "react-native";
 import Constants from "expo-constants";
+import {Route, Routes} from 'react-router-native'
 import RepositoryList from "./RepositoryList";
 import useThemedStyles from "./hooks/useThemedStyles";
 import AppBar from "./AppBar";
 import SignIn from "./SignIn";
+import SignOut from "./SignOut";
 
-import {Route, Routes} from 'react-router-native'
 
 const Main = () => {
   let style = useThemedStyles(styles);
@@ -15,6 +16,7 @@ const Main = () => {
       <Routes>
         <Route path='/' element={<RepositoryList/>}/>
         <Route path='/signin' element={<SignIn/>} />
+        <Route path='/signout' element={<SignOut/>}/>
       </Routes>
     </View>
   );

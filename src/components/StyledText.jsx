@@ -14,7 +14,6 @@ const StyledText = ({style:propStyle ={}, children, ...props}) =>{
         })
         allStyles.push(propStyle)
         return allStyles
-
     }
 
     return(

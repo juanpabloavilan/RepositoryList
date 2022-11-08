@@ -1,4 +1,3 @@
-import { ErrorMessage } from 'formik'
 import React from 'react'
 import { TextInput, StyleSheet } from 'react-native'
 import useThemedStyles from './hooks/useThemedStyles'
@@ -34,7 +33,8 @@ const stylesCallback = theme => StyleSheet.create({
         borderColor: theme.colors.error
     },
     errorMessage:{
-        marginTop: -5
+        marginTop: -10,
+        marginLeft: 5
     }
 })
 

@@ -1,40 +1,24 @@
-import React from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  TouchableWithoutFeedback,
-  Platform,
-} from "react-native";
-import { Link, useLocation } from "react-router-native";
-import Header from "./Header";
+import React, {useContext} from "react";
+import {View,StyleSheet, ScrollView, Platform} from "react-native";
 import useThemedStyles from "./hooks/useThemedStyles";
-
-const AppBarTab = ({ children, to }) => {
-  const styles = useThemedStyles(stylesCallback);
-  const { pathname } = useLocation();
-  const tabStyles = [styles.barTab, pathname === to && styles.active];
-  return (
-    <Link to={to} component={TouchableWithoutFeedback}>
-      <Text style={tabStyles}>
-        {children} {console.log(pathname)}
-      </Text>
-    </Link>
-  );
-};
+import AppBarTab from "./AppBarTab";
+import {useApolloClient, useQuery } from "@apollo/react-hooks";
+import {IS_USER_LOGGED_IN} from "../graphql/queries"
 
 const AppBar = () => {
   const styles = useThemedStyles(stylesCallback);
-
+  const {data ={}, loading, refetch} = useQuery(IS_USER_LOGGED_IN)
+  console.log(data);
+  const authorizedUser = !data ?  undefined :data.authorizedUser 
+  const apolloClient = useApolloClient()
+  apolloClient.resetStore()
+  
   return (
     <View style={styles.container}>
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-      >
+      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
         <AppBarTab to={"/"}>Repositories</AppBarTab>
-        <AppBarTab to={"/signin"}>Sign In</AppBarTab>
+        {!authorizedUser &&<AppBarTab to={"/signin"} >Sign In</AppBarTab>}
+        {authorizedUser && <AppBarTab to={"/signout"}>Sign Out</AppBarTab>}
       </ScrollView>
     </View>
   );
@@ -55,10 +39,8 @@ const stylesCallback = (theme) =>
       marginLeft: 10,
       fontWeight: "bold",
       color: "#cccc",
-    },
-    active: {
-      color: theme.colors.headline,
-    },
+    }
+    
   });
 
 export default AppBar;
